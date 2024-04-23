@@ -1,34 +1,70 @@
 import os
-from crewai import Agent, Task, Crew
-from langchain.agents import Tool
+from crewai import Agent, Task, Crew, Process
 from langchain_community.tools import DuckDuckGoSearchRun
+from langchain.agents import load_tools
 from dotenv import load_dotenv
 
 load_dotenv()
 
-research_agent = Agent(
-    role='AI Agent Researcher',
-    goal='Find and summarize the latest AI Agent news',
-    backstory="""You're an AI agent researcher at a leading university.
-    You're responsible for analyzing data and providing insights
-    to the department and your students.""",
-    verbose=True
-)
-
+# Tools
 search_tool = DuckDuckGoSearchRun()
+human_tools = load_tools(["human"])
 
-task = Task(
-  description='Find and summarize the latest AI agent news',
-  expected_output='A bullet list summary of the top 5 most important AI agent news items',
-  agent=research_agent,
-  tools=[search_tool]
+
+# Define your agents with roles and goals
+researcher = Agent(
+  role='Senior Research Analyst',
+  goal='Uncover cutting-edge developments in AI and data science',
+  backstory="""You are a Senior Research Analyst at a leading tech think tank.
+  Your expertise lies in identifying emerging trends and technologies in AI and
+  data science. You have a knack for dissecting complex data and presenting
+  actionable insights.""",
+  verbose=True,
+  allow_delegation=False,
+  tools=[search_tool]+human_tools
 )
 
+writer = Agent(
+  role='Tech Content Strategist',
+  goal='Craft compelling content on tech advancements',
+  backstory="""You are a renowned Tech Content Strategist, known for your insightful
+  and engaging articles on technology and innovation. With a deep understanding of
+  the tech industry, you transform complex concepts into compelling narratives.""",
+  verbose=True,
+  allow_delegation=False
+)
+
+# Create tasks for your agents
+task1 = Task(
+  description="""Conduct a comprehensive analysis of the latest advancements in AI in 2024.
+  Identify key trends, breakthrough technologies, and potential industry impacts.
+  Compile your findings in a detailed report.
+  Make sure to check with a human if the draft is good before finalizing your answer.""",
+  expected_output='A comprehensive full report on the latest AI advancements in 2024, leave nothing out',
+  agent=researcher
+)
+
+task2 = Task(
+  description="""Using the insights from the researcher's report, develop an engaging blog
+  post that highlights the most significant AI advancements.
+  Your post should be informative yet accessible, catering to a tech-savvy audience.
+  Aim for a narrative that captures the essence of these breakthroughs and their
+  implications for the future.
+  Your final answer MUST be the full blog post of at least 3 paragraphs.
+  Make sure to check with a human if the draft is good before finalizing your answer.""",
+  expected_output='A compelling 3 paragraphs blog post formated as markdown about the latest AI advancements in 2024',
+  agent=writer
+)
+
+# Instantiate your crew with a sequential process
 crew = Crew(
-    agents=[research_agent],
-    tasks=[task],
-    verbose=2
+  agents=[researcher, writer],
+  tasks=[task1, task2],
+  verbose=2
 )
 
+# Get your crew to work!
 result = crew.kickoff()
+
+print("######################")
 print(result)

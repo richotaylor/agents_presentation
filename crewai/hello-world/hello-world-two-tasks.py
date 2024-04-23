@@ -18,8 +18,8 @@ task = Task(
 )
 
 task2 = Task(
-  description='Tell me about dogs',
-  expected_output='A bulleted list of the top 3 most important aspects of the topic',
+  description='Tell me a joke based on the following items.',
+  expected_output='Text',
   agent=basic_agent
 )
 

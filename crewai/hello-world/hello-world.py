@@ -4,25 +4,23 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-research_agent = Agent(
-    role='AI Agent Researcher',
-    goal='Find and summarize the latest AI Agent news',
-    backstory="""You're an AI agent researcher at a leading university.
-    You're responsible for analyzing data and providing insights
-    to the department and your students.""",
+basic_agent = Agent(
+    role='A helpful assistant',
+    goal='Answer questions',
+    backstory="""You're an assistant that is intelligent and helpful.""",
     verbose=True
 )
 
 task = Task(
-  description='Find and summarize the latest AI agent news',
-  expected_output='A bullet list summary of the top 5 most important AI agent news items',
-  agent=research_agent
+  description='Tell me about data engineering',
+  expected_output='A bulleted list of the top 5 most important aspects of the topic',
+  agent=basic_agent
 )
 
 crew = Crew(
-    agents=[research_agent],
+    agents=[basic_agent],
     tasks=[task],
-    verbose=2
+    verbose=0
 )
 
 result = crew.kickoff()
