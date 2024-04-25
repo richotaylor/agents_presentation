@@ -1,4 +1,6 @@
 
+# To run: `chainlit run basic.py`
+
 import os
 from crewai import Agent, Task, Crew, Process
 from langchain_community.tools import DuckDuckGoSearchRun
