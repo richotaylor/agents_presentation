@@ -6,4 +6,9 @@ https://docs.google.com/presentation/d/1UzHd_yNuXJSmys2YDVopqXW7gEJ-KxvX1xnxdg46
 
 ## Samples
 To run the samples
-1. Populate the .env file with your OPEN
+1. From the project home page click Code (Green button) >
+Codespaces > +, to create a new codespace
+1. Create a `.env` file at the root of the project and populate it with your `OPENAI_API_KEY` and optionally `LANGCHAIN_API_KEY` (For Langsmith tracing)
+1. `pip install crewai`
+1. `pip install langchain`
+1. See the readme.md in each subfolder for the command to run the example.
