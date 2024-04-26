@@ -12,15 +12,21 @@ basic_agent = Agent(
 )
 
 task = Task(
-  description='Tell me about data engineering',
+  description='Tell me about data engineering.',
   expected_output='A bulleted list of the top 5 most important aspects of the topic',
+  agent=basic_agent
+)
+
+task2 = Task(
+  description='Tell me a silly joke based on this topic.',
+  expected_output='Text',
   agent=basic_agent
 )
 
 crew = Crew(
     agents=[basic_agent],
-    tasks=[task],
-    verbose=0
+    tasks=[task, task2],
+    verbose=1
 )
 
 result = crew.kickoff()

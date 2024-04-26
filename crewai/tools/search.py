@@ -27,7 +27,7 @@ task = Task(
 crew = Crew(
     agents=[research_agent],
     tasks=[task],
-    verbose=2
+    verbose=1
 )
 
 result = crew.kickoff()

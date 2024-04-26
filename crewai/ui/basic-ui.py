@@ -13,10 +13,9 @@ load_dotenv()
 import chainlit as cl
 
 # Langchain config
-# os.environ["LANGCHAIN_TRACING_V2"] = "true"
-# os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
-# os.environ["LANGCHAIN_API_KEY"] = "ls__7959a89dc5c448ae9b96b3b1f2e80d9b"
-# os.environ["LANGCHAIN_PROJECT"] = "OctaneAgent"
+os.environ["LANGCHAIN_TRACING_V2"] = "true"
+os.environ["LANGCHAIN_ENDPOINT"] = "https://api.smith.langchain.com"
+os.environ["LANGCHAIN_PROJECT"] = "BasicAgent"
 
 # Ollama
 # os.environ['OPENAI_API_BASE'] = 'http://localhost:11434/v1'
